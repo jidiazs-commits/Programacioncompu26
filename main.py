@@ -71,4 +71,17 @@ def procesar_estadisticas_vistas(ruta_archivo):
                     
                 if valor_numerico < min_val:
                     min_val = valor_numerico
-            ### veo Samuel toca poner el contador que actualice las variables y la sumatora
+            
+            #Suma el valor actual al total que ya esta acomulado y se suma 1 al contador de registros.
+            sumatoria = sumatoria + valor_numerico
+            contador = contador + 1
+            
+    # Se divide la suma total entre el número de filas procesadas
+    promedio = 0.0
+    if contador > 0:
+        promedio = sumatoria / contador
+        
+    # Envia los cuatro resultados finalaes listos para usarlos fuera de la función
+    return max_val, min_val, promedio, contador
+    #Ya esta el contador, el promedioo el return que envia los resultados finales.a
+    #Unicamente falta la parte de ellos y hacer la interfaz
