@@ -9,7 +9,7 @@ def convertir(valor_str):
     #defini esta variable para poder pasar los numeros a float
     multiplicador = 1
     
-    #se revisa con qué letra termina y se le asigna el multiplicador para dejar el numero plano
+    #se revisa con que letra termina y se le asigna el multiplicador para dejar el número plano
     if valor_str.endswith('B'): #si termina con B
         multiplicador = 1000000000
     #corte el texto para quitar la última letra '16.8B'='16.8'
@@ -25,3 +25,36 @@ def convertir(valor_str):
     #defini la variable para que pase de str a float y se multiplique por el valor correspondiente segun su letra 
     valor_final = float(valor_str) * multiplicador
     return valor_final
+
+#Función principal para calcular
+def procesar_estadisticas_vistas(ruta_archivo):
+    # 
+    # Cree las variables acumuladoras para guardar el número más alto, el más bajo y la suma de todos y el contador para saber cuántas filas proceso.
+    max_val = 0.0
+    min_val = 0.0
+    sumatoria = 0.0
+    contador = 0
+    
+    # Identifique el encabezado(primer fila) que son los titulos y estos no se procesan como números
+    es_encabezado = True
+    # Hice esto para que el primer número procesado se convierta en el primer mínimo y el primer máximo
+    es_primer_dato = True
+    
+    # Abri el archivo de forma normal
+    with open(ruta_archivo, 'r', encoding='utf-8') as archivo:
+        
+        # Procesa el archivo línea por línea
+        for linea in archivo:
+            
+            # Si es la primera línea se cambia a false y el continue funciona para saltasr el resto del codigo y pasar a la siguiente línea que son los datos reales
+            if es_encabezado == True:
+                es_encabezado = False
+                continue
+            
+            # Corta la línea de texto cada vez que encuentra una coma y lo convierte a una lista de palabras
+            columnas = linea.split(',')
+            
+            # Accede a la penultima columna
+            vistas_str = columnas[-2]
+            #Llama a la función de transformar el texto a un número
+            valor_numerico = limpiar_y_convertir_metrica(vistas_str)
