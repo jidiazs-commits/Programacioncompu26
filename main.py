@@ -27,6 +27,58 @@ def convertir(valor_str):
         return valor_final
     except ValueError:
         return 0.0
+
+def filtrar_por_vistas(ruta_archivo):
+    #Esta función permite filtrar videos en base al umbral de vistas definido por el usuario
+    print("\n" + "-"*30)
+    print("FILTRADO PERSONALIZADO")
+    print("-"*30)
+    try:
+        # Pedimos el umbral al usuario. Usamos float porque las vistas pueden tener decimales (ej. 16.8)
+        umbral = float(input("Ingrese el mínimo de vistas a buscar: "))
+        
+        # Abrimos el archivo usando la ruta que recibe la función
+        with open(ruta_archivo, 'r', encoding='utf-8') as archivo:
+            
+            # Saltamos la primera línea (encabezado) para no procesar texto como número
+            next(archivo)
+            
+            contador_encontrados = 0
+            print(f"\nBuscando videos con más de {umbral} vistas...")
+            
+            # Bucle para recorrer el archivo línea por línea
+            for linea in archivo:
+                # Quitamos el salto de línea al final y separamos por comas
+                columnas = linea.strip().split(',')
+                
+                # Verificamos que la línea tenga todas las columnas para evitar errores
+                if len(columnas) < 9:
+                    continue
+                
+                # Extraemos datos usando índices:
+                # [1] es el título (2da columna)
+                # [-2] es la penúltima columna donde están las vistas
+                titulo = columnas[1]
+                vistas_texto = columnas[-2]
+                
+                # Convertimos el texto a número usando la función convertir de mi compañero
+                # Esto es necesario para poder hacer la comparación matemática
+                vistas_numericas = convertir(vistas_texto)
+                
+                # 7. Evaluamos la condición de filtrado
+                if vistas_numericas >= umbral:
+                    print(f" * ENCONTRADO: {titulo} ({vistas_numericas} vistas)")
+                    contador_encontrados += 1
+            
+            # Resumen final de la búsqueda
+            if contador_encontrados > 0:
+                print(f"\nSe encontraron {contador_encontrados} resultados.")
+            else:
+                print("\nNo hay videos que superen ese número de vistas.")
+                
+    except ValueError:
+        # Si el usuario escribe letras en lugar de números, el programa no se cierra
+        print("\nERROR: Debe ingresar un valor numérico válido.")
         
 #Función principal para calcular
 def procesar_estadisticas(ruta_archivo):
@@ -129,7 +181,7 @@ def procesar_estadisticas(ruta_archivo):
     }
     #Ya esta el contador, el promedioo el return que envia los resultados finales.a
     #Unicamente falta la parte de ellos y hacer la interfaz
-    
+     
     #Bloque menu interactivo en consola inicio:
 def ejecutar_menu():
     ruta = "youtube_pequeño.csv"
@@ -147,10 +199,11 @@ def ejecutar_menu():
         print("3. Video con mas likes")
         print("4. Video con menos likes")
         print("5. Promedios (Vistas y Likes)")
-        print("6. Salir")
+        print("6. Filtrar por cantidad de vistas")
+        print("7. Salir")
         print("="*40)
 
-        opcion = input("Selecciona una opción (1-6): ")
+        opcion = input("Selecciona una opción (1-7): ")
         #Aquí se selecciona la opícón y da los resultados pedidos
         if opcion == '1':
             print(f"\n VIDEO: {res['nom_max_v']}")
