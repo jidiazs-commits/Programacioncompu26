@@ -116,7 +116,16 @@ def procesar_estadisticas_vistas(ruta_archivo):
         promedio_vistas = sumatoria_vistas / contador
         promedio_likes = sumatoria_likes / contador
         
-    # Envia los cuatro resultados finalaes listos para usarlos fuera de la función
-    return max_val, min_val, promedio, contador
+    # Envia los resultados finalaes listos para usarlos fuera de la función
+    # ahora hice que retornara un diccionario que es necesario para manejar muchas variables sin que
+    # se cruzen los datos
+    return {
+        "max_v": max_val_vistas, "nom_max_v": nombre_max_vistas,
+        "min_v": min_val_vistas, "nom_min_v": nombre_min_vistas,
+        "max_l": max_val_likes, "nom_max_l": nombre_max_likes,
+        "min_l": min_val_likes, "nom_min_l": nombre_min_likes,
+        "prom_v": promedio_vistas, "prom_l": promedio_likes,
+        "contador": contador
+    }
     #Ya esta el contador, el promedioo el return que envia los resultados finales.a
     #Unicamente falta la parte de ellos y hacer la interfaz
