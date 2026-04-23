@@ -1,4 +1,3 @@
-# Funcion para convertir vistas en numeros
 def convertir(valor_str):
    
     valor_str = valor_str.strip().upper() #quita los espacios en blanco y lo pone en mayusculas 
@@ -23,9 +22,13 @@ def convertir(valor_str):
         
     #converti el texto a decimal y lo multiplicamos
     #defini la variable para que pase de str a float y se multiplique por el valor correspondiente segun su letra 
-    valor_final = float(valor_str) * multiplicador
-    return valor_final
-
+    #Falto un bloque try-except para que no colapse si hay un texto que no es legible
+    try:
+        valor_final = float(valor_str) * multiplicador
+        return valor_final
+    except ValueError:
+        return 0.0
+        
 #Función principal para calcular
 def procesar_estadisticas_vistas(ruta_archivo):
     # 
