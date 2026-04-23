@@ -60,7 +60,7 @@ def procesar_estadisticas_vistas(ruta_archivo):
             if es_encabezado == True:
                 es_encabezado = False
                 continue
-            
+            linea = linea.strip() #aqui selimpia la línea de saltos invisibles (\n) antes de cortarla
             # Corta la línea de texto cada vez que encuentra una coma y lo convierte a una lista de palabras
             columnas = linea.split(',')
             
