@@ -151,3 +151,16 @@ def ejecutar_menu():
         print("="*40)
 
         opcion = input("Selecciona una opción (1-6): ")
+        #Aquí se selecciona la opícón y da los resultados pedidos
+        if opcion == '1':
+            print(f"\n VIDEO: {res['nom_max_v']}")
+            print(f" Vistas: {res['max_v']:,.0f}")
+        elif opcion == '2':
+            print(f"\n VIDEO: {res['nom_min_v']}")
+            print(f" Vistas: {res['min_v']:,.0f}")
+        elif opcion == '3':
+            print(f"\n VIDEO: {res['nom_max_l']}")
+            print(f" Likes: {res['max_l']:,.0f}")
+        elif opcion == '4':
+            print(f"\n🎬 VIDEO: {res['nom_min_l']}")
+            print(f" Likes: {res['min_l']:,.0f}")
