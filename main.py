@@ -113,7 +113,8 @@ def procesar_estadisticas_vistas(ruta_archivo):
     promedio_vistas = 0.0
     promedio_likes = 0.0
     if contador > 0:
-        promedio_vistas = sumatoria / contador
+        promedio_vistas = sumatoria_vistas / contador
+        promedio_likes = sumatoria_likes / contador
         
     # Envia los cuatro resultados finalaes listos para usarlos fuera de la función
     return max_val, min_val, promedio, contador
