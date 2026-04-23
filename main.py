@@ -96,7 +96,14 @@ def procesar_estadisticas_vistas(ruta_archivo):
                 if valor_numerico_vistas < min_val_vistas:
                     min_val_vistas = valor_numerico_vistas
                     nombre_min_vistas = nombre_video
-                    
+
+                if valor_numerico_likes > max_val_likes:
+                    max_val_likes = valor_numerico_likes
+                    nombre_max_likes = nombre_video
+                
+                if valor_numerico_likes < min_val_likes:
+                    min_val_likes = valor_numerico_likes
+                    nombre_min_likes = nombre_video
             #Suma el valor actual al total que ya esta acomulado y se suma 1 al contador de registros.
             sumatoria = sumatoria + valor_numerico_vistas
             contador = contador + 1
