@@ -66,27 +66,28 @@ def procesar_estadisticas_vistas(ruta_archivo):
             # Valido que la fila no este rota o vacia para que no de error
             if len(columnas) < 9:
                 continue
-
-            # Accede a la penultima columna
-            vistas_str = columnas[-2]
+            nombre_video = columnas[1]#accede a la última columna para los likes
+            vistas_str = columnas[-2]# Accede a la penultima columna
+            likes_str = columnas[-1]
             #Llama a la función de transformar el texto a un número
-            valor_numerico = convertir(vistas_str)
+            valor_numerico_vistas = convertir(vistas_str)
+            valor_numerico_likes = convertir(likes_str)
             ##Ahi cree la condicion que faltaba para qeu el primer numero es el mas grande y el mas pequeño de los numeros
             if es_primer_dato == True:
                 # Si es el primer dato que se lee, es el mayor y el menor a la vez
-                max_val = valor_numerico
-                min_val = valor_numerico
+                max_val = valor_numerico_vistas
+                min_val = valor_numerico_vistas
                 es_primer_dato = False ##Esto es porque como la fila tiene los titulos de las columnas pues no se pueden procesar ni nos interesa que se procese
             else:
                 # y sii no es el primero, se compara con los que ya se tienen guardados
-                if valor_numerico > max_val:
-                    max_val = valor_numerico
+                if valor_numerico_vistas > max_val:
+                    max_val = valor_numerico_vistas
                     
-                if valor_numerico < min_val:
-                    min_val = valor_numerico
+                if valor_numerico_vistas < min_val:
+                    min_val = valor_numerico_vistas
             
             #Suma el valor actual al total que ya esta acomulado y se suma 1 al contador de registros.
-            sumatoria = sumatoria + valor_numerico
+            sumatoria = sumatoria + valor_numerico_vistas
             contador = contador + 1
             
     # Se divide la suma total entre el número de filas procesadas
