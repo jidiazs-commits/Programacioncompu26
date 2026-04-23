@@ -44,7 +44,7 @@ def filtrar_por_vistas(ruta_archivo):
             next(archivo)
             
             contador_encontrados = 0
-            print(f"\nBuscando videos con más de {umbral} vistas...")
+            print(f"\nBuscando videos con {umbral} o más vistas...")
             
             # Bucle para recorrer el archivo línea por línea
             for linea in archivo:
@@ -65,7 +65,7 @@ def filtrar_por_vistas(ruta_archivo):
                 # Esto es necesario para poder hacer la comparación matemática
                 vistas_numericas = convertir(vistas_texto)
                 
-                # 7. Evaluamos la condición de filtrado
+                # Evaluamos la condición de filtrado
                 if vistas_numericas >= umbral:
                     print(f" * ENCONTRADO: {titulo} ({vistas_numericas} vistas)")
                     contador_encontrados += 1
@@ -199,10 +199,11 @@ def ejecutar_menu():
         print("3. Video con mas likes")
         print("4. Video con menos likes")
         print("5. Promedios (Vistas y Likes)")
-        print("6. Salir")
+        print("6. Filtrar por vistas")    
+        print("7. Salir")
         print("="*40)
 
-        opcion = input("Selecciona una opción (1-6): ")
+        opcion = input("Selecciona una opción (1-7): ")
         #Aquí se selecciona la opícón y da los resultados pedidos
         if opcion == '1':
             print(f"\n VIDEO: {res['nom_max_v']}")
@@ -221,6 +222,8 @@ def ejecutar_menu():
             print(f"Promedio de Likes: {res['prom_l']:,.2f}")
             print(f"Total de videos analizados: {res['contador']}")
         elif opcion == '6':
+            filtrar_por_vistas(ruta)
+        elif opcion == '7':
             print("\n Cerrando sistema...")
             break
         else:
