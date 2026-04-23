@@ -89,12 +89,14 @@ def procesar_estadisticas_vistas(ruta_archivo):
                 es_primer_dato = False #Esto es porque como la fila tiene los titulos de las columnas pues no se pueden procesar ni nos interesa que se procese
             else:
                 # y sii no es el primero, se compara con los que ya se tienen guardados
-                if valor_numerico_vistas > max_val:
-                    max_val = valor_numerico_vistas
+                if valor_numerico_vistas > max_val_vistas:
+                    max_val_vistas = valor_numerico_vistas
+                    nombre_max_vistas = nombre_video
+
+                if valor_numerico_vistas < min_val_vistas:
+                    min_val_vistas = valor_numerico_vistas
+                    nombre_min_vistas = nombre_video
                     
-                if valor_numerico_vistas < min_val:
-                    min_val = valor_numerico_vistas
-            
             #Suma el valor actual al total que ya esta acomulado y se suma 1 al contador de registros.
             sumatoria = sumatoria + valor_numerico_vistas
             contador = contador + 1
