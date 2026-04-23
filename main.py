@@ -129,3 +129,13 @@ def procesar_estadisticas_vistas(ruta_archivo):
     }
     #Ya esta el contador, el promedioo el return que envia los resultados finales.a
     #Unicamente falta la parte de ellos y hacer la interfaz
+    
+    #Bloque menu interactivo en consola inicio:
+def ejecutar_menu():
+    ruta = "youtube_pequeño.csv"
+    try:
+        res = procesar_estadisticas(ruta)
+    except FileNotFoundError:
+        print(f"Error crítico: No se encontró {ruta}")
+        return
+    #Continua sebastian
