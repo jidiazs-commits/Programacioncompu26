@@ -138,4 +138,16 @@ def ejecutar_menu():
     except FileNotFoundError:
         print(f"Error crítico: No se encontró {ruta}")
         return
-    #Continua sebastian
+    while True:
+        print("\n" + "="*40)
+        print("DATA LAB - Analisis de videos mas vistos youtube")
+        print("="*40)
+        print("1. Video con mas vistas")
+        print("2. Video con menos vistas")
+        print("3. Video con mas likes")
+        print("4. Video con menos likes")
+        print("5. Promedios (Vistas y Likes)")
+        print("6. Salir")
+        print("="*40)
+
+        opcion = input("Selecciona una opción (1-6): ")
