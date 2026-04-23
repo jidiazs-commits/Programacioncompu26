@@ -30,7 +30,7 @@ def convertir(valor_str):
         return 0.0
         
 #Función principal para calcular
-def procesar_estadisticas_vistas(ruta_archivo):
+def procesar_estadisticas(ruta_archivo):
     # 
     # Cree las variables acumuladoras para guardar el número más alto, el más bajo y la suma de todos y el contador para saber cuántas filas proceso.
     max_val_vistas = 0.0
@@ -162,5 +162,17 @@ def ejecutar_menu():
             print(f"\n VIDEO: {res['nom_max_l']}")
             print(f" Likes: {res['max_l']:,.0f}")
         elif opcion == '4':
-            print(f"\n🎬 VIDEO: {res['nom_min_l']}")
+            print(f"\n VIDEO: {res['nom_min_l']}")
             print(f" Likes: {res['min_l']:,.0f}")
+        elif opcion == '5':
+            print(f"\n Promedio de Vistas: {res['prom_v']:,.2f}")
+            print(f"Promedio de Likes: {res['prom_l']:,.2f}")
+            print(f"Total de videos analizados: {res['contador']}")
+        elif opcion == '6':
+            print("\n Cerrando sistema...")
+            break
+        else:
+            print("\n Opción inválida.")
+
+if __name__ == "__main__":
+    ejecutar_menu()
