@@ -110,7 +110,8 @@ def procesar_estadisticas_vistas(ruta_archivo):
             contador = contador + 1
             
     # Se divide la suma total entre el número de filas procesadas
-    promedio = 0.0
+    promedio_vistas = 0.0
+    promedio_likes = 0.0
     if contador > 0:
         promedio_vistas = sumatoria / contador
         
