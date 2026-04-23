@@ -75,15 +75,18 @@ def procesar_estadisticas_vistas(ruta_archivo):
             valor_numerico_likes = convertir(likes_str)
             ##Condicion que faltaba para que el primer numero sea el mas grande y el mas pequeño de los numeros
             if es_primer_dato == True:
-                # Si es el primer dato que se lee, es el mayor y el menor a la vez
+                # Si es el primer dato que se lee, es el mayor y el menor a la vez.
                 max_val_vistas = valor_numerico_vistas
                 min_val_vistas = valor_numerico_vistas
                 #Inicia en la primera pasada las variables de likes y de los nombres
                 max_val_likes = valor_numerico_likes
                 min_val_likes = valor_numerico_likes
                 nombre_max_vistas = nombre_video
-
-                es_primer_dato = False ##Esto es porque como la fila tiene los titulos de las columnas pues no se pueden procesar ni nos interesa que se procese
+                nombre_min_vistas = nombre_video
+                nombre_max_likes = nombre_video
+                nombre_min_likes = nombre_video
+                
+                es_primer_dato = False #Esto es porque como la fila tiene los titulos de las columnas pues no se pueden procesar ni nos interesa que se procese
             else:
                 # y sii no es el primero, se compara con los que ya se tienen guardados
                 if valor_numerico_vistas > max_val:
