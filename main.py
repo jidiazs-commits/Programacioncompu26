@@ -1,5 +1,4 @@
 def convertir(valor_str):
-   
     valor_str = valor_str.strip().upper() #quita los espacios en blanco y lo pone en mayusculas 
     
     #como el valor es un string se pone esta condicion para regresar un float y poderlo utilizar
@@ -31,7 +30,8 @@ def convertir(valor_str):
         
 #Función principal para calcular
 def procesar_estadisticas(ruta_archivo):
-    # 
+    
+    contador = 0 
     # Cree las variables acumuladoras para guardar el número más alto, el más bajo y la suma de todos y el contador para saber cuántas filas proceso.
     max_val_vistas = 0.0
     min_val_vistas = 0.0
