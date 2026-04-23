@@ -63,7 +63,10 @@ def procesar_estadisticas_vistas(ruta_archivo):
             linea = linea.strip() #aqui selimpia la línea de saltos invisibles (\n) antes de cortarla
             # Corta la línea de texto cada vez que encuentra una coma y lo convierte a una lista de palabras
             columnas = linea.split(',')
-            
+            # Valido que la fila no este rota o vacia para que no de error
+            if len(columnas) < 9:
+                continue
+
             # Accede a la penultima columna
             vistas_str = columnas[-2]
             #Llama a la función de transformar el texto a un número
