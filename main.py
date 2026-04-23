@@ -199,11 +199,10 @@ def ejecutar_menu():
         print("3. Video con mas likes")
         print("4. Video con menos likes")
         print("5. Promedios (Vistas y Likes)")
-        print("6. Filtrar por cantidad de vistas")
-        print("7. Salir")
+        print("6. Salir")
         print("="*40)
 
-        opcion = input("Selecciona una opción (1-7): ")
+        opcion = input("Selecciona una opción (1-6): ")
         #Aquí se selecciona la opícón y da los resultados pedidos
         if opcion == '1':
             print(f"\n VIDEO: {res['nom_max_v']}")
