@@ -33,11 +33,18 @@ def convertir(valor_str):
 def procesar_estadisticas_vistas(ruta_archivo):
     # 
     # Cree las variables acumuladoras para guardar el número más alto, el más bajo y la suma de todos y el contador para saber cuántas filas proceso.
-    max_val = 0.0
-    min_val = 0.0
-    sumatoria = 0.0
-    contador = 0
+    max_val_vistas = 0.0
+    min_val_vistas = 0.0
+    sumatoria_vistas = 0.0
     
+    #Cree las variables de estado para los likes y los nombres de los videos.
+    max_val_likes = 0.0
+    min_val_likes = 0.0
+    sumatoria_likes = 0.0
+    nombre_max_vistas = ""
+    nombre_min_vistas = ""
+    nombre_max_likes = ""
+    nombre_min_likes = ""
     # Identifique el encabezado(primer fila) que son los titulos y estos no se procesan como números
     es_encabezado = True
     # Hice esto para que el primer número procesado se convierta en el primer mínimo y el primer máximo
