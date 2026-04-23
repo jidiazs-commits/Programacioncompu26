@@ -105,13 +105,14 @@ def procesar_estadisticas_vistas(ruta_archivo):
                     min_val_likes = valor_numerico_likes
                     nombre_min_likes = nombre_video
             #Suma el valor actual al total que ya esta acomulado y se suma 1 al contador de registros.
-            sumatoria = sumatoria + valor_numerico_vistas
+            sumatoria_vistas = sumatoria_vistas + valor_numerico_vistas
+            sumatoria_likes = sumatoria_likes + valor_numerico_likes
             contador = contador + 1
             
     # Se divide la suma total entre el número de filas procesadas
     promedio = 0.0
     if contador > 0:
-        promedio = sumatoria / contador
+        promedio_vistas = sumatoria / contador
         
     # Envia los cuatro resultados finalaes listos para usarlos fuera de la función
     return max_val, min_val, promedio, contador
