@@ -1,3 +1,82 @@
+def cargar_datos(ruta):
+    datos = []
+    with open(ruta, encoding="utf-8") as archivo:
+        encabezado = archivo.readline()  
+        for i, linea in enumerate(archivo):
+            if i >= 50:
+            break
+        linea = linea.strip()
+        columnas = linea.split(",")
+        datos.append(columnas)
+    return datos
+def buscar(datos, termino):
+
+    contador = 0
+    # Variable para contar cuántas coincidencias encontramos
+
+    for fila in datos:
+        # Recorremos cada fila del CSV (cada fila es una lista)
+
+        # Convertimos la fila en un solo texto con comas
+        # Ejemplo: ["Juan", "20", "Bogota"] → "Juan,20,Bogota"
+        fila_completa = ",".join(fila)
+
+        # Comparamos ignorando mayúsculas/minúsculas
+        if termino.lower() in fila_completa.lower():
+            # Si el término aparece en la fila...
+
+            print(fila)
+            # Mostramos la fila completa
+
+            contador += 1
+            # Sumamos 1 al contador
+
+    print(f"Se encontraron {contador} registros.")
+    # Mostramos el total de coincidencias encontradas
+
+
+# Esta función controla el menú del programa
+def menu():
+
+    datos = cargar_datos("youtube_pequeño.csv")
+    # Cargamos los datos del archivo una sola vez
+    # "datos" ahora contiene una lista de filas
+
+    while True:
+        # Bucle infinito para que el menú se repita
+
+        print("\n--- MENÚ ---")
+        print("1. Buscar")
+        print("2. Salir")
+
+        opcion = input("Elige una opción: ")
+        # Pedimos al usuario que elija una opción
+
+        if opcion == "1":
+            # Si elige buscar...
+
+            termino = input("Ingresa término a buscar: ")
+            # Pedimos el texto que quiere buscar
+
+            buscar(datos, termino)
+            # Llamamos a la función buscar
+
+        elif opcion == "2":
+            # Si elige salir...
+
+            print("Saliendo...")
+            break
+            # Rompe el bucle y termina el programa
+
+        else:
+            # Si escribe algo inválido...
+
+            print("Opción inválida")
+
+
+# Punto de inicio del programa
+menu()
+# Llamamos a la función menú para que todo empiece
 def convertir(valor_str):
     valor_str = valor_str.strip().upper() #quita los espacios en blanco y lo pone en mayusculas 
     
