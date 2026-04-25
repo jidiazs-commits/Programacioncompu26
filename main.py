@@ -1,32 +1,32 @@
 def cargar_datos(ruta):
+    #Se crea una lista para guardar las filas
     datos = []
+    #Abrimos el archivo
     with open(ruta, encoding="utf-8") as archivo:
-        encabezado = archivo.readline()  
+        encabezado = archivo.readline() 
+        # Recorremos el archivo linea por linea, maximo 50 filas
         for i, linea in enumerate(archivo):
             if i >= 50:
                 break
-        linea = linea.strip()
-        columnas = linea.split(",")
-        datos.append(columnas)
+        linea = linea.strip()# eliminamos espacios
+        columnas = linea.split(",")# Dividimos la linea en columnas
+        datos.append(columnas)# Guardamos las filas en la lista
     return datos
 def buscar(datos, termino):
 
     contador = 0
-    # Variable para contar cuántas coincidencias encontramos
-
-    for fila in datos:
-        # Recorremos cada fila del CSV (cada fila es una lista)
-
-        # Convertimos la fila en un solo texto con comas
+    # Variable que guarda la cantidad de concidencias
+    
+    for fila in datos:    
+        # Convertimos la fila en un solo string
         # Ejemplo: ["Juan", "20", "Bogota"] → "Juan,20,Bogota"
         fila_completa = ",".join(fila)
 
-        # Comparamos ignorando mayúsculas/minúsculas
+        # Ignoramos mayusculas y minusculas
         if termino.lower() in fila_completa.lower():
-            # Si el término aparece en la fila...
+            # Imprimimos la fila encontrada
 
             print(fila)
-            # Mostramos la fila completa
 
             contador += 1
             # Sumamos 1 al contador
@@ -34,8 +34,7 @@ def buscar(datos, termino):
     print(f"Se encontraron {contador} registros.")
     # Mostramos el total de coincidencias encontradas
 
-
-# Esta función controla el menú del programa
+# Esta función controla el menu del programa
 def menu():
 
     datos = cargar_datos("youtube_pequeño.csv")
@@ -53,7 +52,7 @@ def menu():
         # Pedimos al usuario que elija una opción
 
         if opcion == "1":
-            # Si elige buscar...
+            # Si elige buscar.
 
             termino = input("Ingresa término a buscar: ")
             # Pedimos el texto que quiere buscar
@@ -62,19 +61,18 @@ def menu():
             # Llamamos a la función buscar
 
         elif opcion == "2":
-            # Si elige salir...
+            # Si elige salir
 
             print("Saliendo...")
             break
             # Rompe el bucle y termina el programa
 
         else:
-            # Si escribe algo inválido...
+            # Si escribe algo inválido
 
             print("Opción inválida")
 
 
-# Punto de inicio del programa
 menu()
 # Llamamos a la función menú para que todo empiece
 def convertir(valor_str):
