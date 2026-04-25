@@ -366,7 +366,5 @@ def idiomas(ruta_archivo):
                 idiomas_org[lectura_idioma.capitalize()] += 1 
         return sorted(idiomas_org.items())
 
-
-
 if __name__ == "__main__":
     ejecutar_menu()
