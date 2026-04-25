@@ -238,8 +238,8 @@ def idioma(ruta_archivo,idioma_user):
                 es_encabezado = False
                 continue
              #creamos la variable que vamos a analizar
-             columna = linea.strip().split(",")
-             lectura_idioma = columna[4].upper()
+             columna = linea.strip().split(',')
+             lectura_idioma = columna[3].upper()
                
              #contamos las veces que aparece un idioma por linea
              if lectura_idioma == idioma_search:
@@ -268,8 +268,8 @@ def idiomas(ruta_archivo):
                 es_encabezado = False
                 continue
              #creamos la variable que vamos a analizar
-            columna = lineas.strip().split(",")
-            lectura_idioma = columna[4].upper()
+            columna = lineas.strip().split(',')
+            lectura_idioma = columna[3].upper()
             if lectura_idioma.capitalize() not in idiomas_org:
                 idiomas_org[lectura_idioma.capitalize()] = 1
                 
