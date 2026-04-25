@@ -306,5 +306,67 @@ def ejecutar_menu():
         else:
             print("\n Opción inválida.")
 
+#función para contar el numero de ocurrencias del idioma que indico el usuario
+
+def idioma(ruta_archivo,idioma_user):
+     
+    
+    idioma_search = idioma_user.strip().upper()
+     
+    with open(ruta_archivo, "r", encoding="utf-8") as archivo:
+           
+           # Tenemos que recorrer cada fila solo por la columna de idiomas
+           
+         dic_ocurrencias_user = {}
+         es_encabezado = True
+         ocurrencias_user = 0
+         for linea in archivo:
+                 
+             #saltamos la aplicación del codigo a la primera fila que corresponde al encabezado
+             if es_encabezado:
+                es_encabezado = False
+                continue
+             #creamos la variable que vamos a analizar
+             columna = linea.strip().split(",")
+             lectura_idioma = columna[4].upper()
+               
+             #contamos las veces que aparece un idioma por linea
+             if lectura_idioma == idioma_search:
+                 ocurrencias_user += 1
+             else:
+                 continue
+             # agregamos a nuestro diccionario el valor y ocurrecias del idioma que digito el usuario
+         idioma_search = idioma_search.capitalize()
+         dic_ocurrencias_user[idioma_search.capitalize()] = ocurrencias_user
+
+         # esta función devuelve cuantas veces aparece el idioma solicitado
+         return dic_ocurrencias_user
+
+def idiomas(ruta_archivo):
+    
+    #estos son los idiomas que aparecen en nuestro archivo PEQUEÑO
+
+    idiomas_org = {}
+    es_encabezado = True
+
+    with open(ruta_archivo, "r", encoding="utf-8") as archivo:
+
+        for lineas in archivo:
+
+            if es_encabezado:
+                es_encabezado = False
+                continue
+             #creamos la variable que vamos a analizar
+            columna = lineas.strip().split(",")
+            lectura_idioma = columna[4].upper()
+            if lectura_idioma.capitalize() not in idiomas_org:
+                idiomas_org[lectura_idioma.capitalize()] = 1
+                
+            else:
+                idiomas_org[lectura_idioma.capitalize()] += 1 
+        return sorted(idiomas_org.items())
+
+
+
 if __name__ == "__main__":
     ejecutar_menu()
