@@ -278,10 +278,8 @@ def idiomas(ruta_archivo):
 
 def ejecutar_menu():
     ruta = "youtube_pequeño.csv"
-    
-    # 1. Carga inicial: El disco se lee UNA SOLA VEZ
     datos_sistema = cargar_datos(ruta)
-    
+
     if not datos_sistema:
         return
 
@@ -301,10 +299,15 @@ def ejecutar_menu():
 
         if opcion == '1':
             termino = input("Ingresa el término a buscar: ")
-            buscar(datos_sistema, termino)
+            encontrados = buscar(datos_sistema, termino)
+            if encontrados:
+                for fila in encontrados:
+                    print(fila)
+                print(f"\nSe encontraron {len(encontrados)} registros.")
+            else:
+                print("No se encontraron coincidencias.")
 
         elif opcion == '2':
-            # Llamamos a la función de estadísticas usando la RAM
             res = procesar_estadisticas(datos_sistema)
             if res:
                 print(f"\n--- RESUMEN ESTADÍSTICO (Top 50) ---")
@@ -316,23 +319,29 @@ def ejecutar_menu():
         elif opcion == '3':
             try:
                 umbral = float(input("Ingrese el mínimo de vistas: "))
-                filtrar_por_vistas(datos_sistema, umbral)
+                resultados = filtrar_por_vistas(datos_sistema, umbral)
+                if resultados:
+                    for item in resultados:
+                        print(f" * ENCONTRADO: {item['titulo']} ({item['vistas']:,.0f} vistas)")
+                    print(f"\nSe encontraron {len(resultados)} resultados.")
+                else:
+                    print("\nNo hay videos que superen ese número de vistas.")
             except ValueError:
                 print("Error: Ingrese un valor numérico válido.")
 
         elif opcion == '4':
             target = input("¿Qué idioma desea contabilizar? ")
-            resultado = analizar_un_idioma(datos_sistema, target)
+            resultado = idioma(datos_sistema, target)
             print(f"Resultado del análisis: {resultado}")
 
         elif opcion == '5':
-            resumen = agrupar_todos_los_idiomas(datos_sistema)
+            resumen = idiomas(datos_sistema)
             print("\nDISTRIBUCIÓN POR IDIOMA:")
             for idioma_nom, cantidad in resumen:
                 print(f"- {idioma_nom}: {cantidad} videos")
 
         elif opcion == '6':
-            print("\nSaliendo del sistema. ¡Éxito en la entrega!")
+            print("\nSaliendo del sistema.")
             break
         else:
             print("\nOpción no válida. Intente de nuevo.")
