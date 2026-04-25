@@ -251,10 +251,11 @@ def idioma(ruta_archivo,idioma_user):
              # agregamos a nuestro diccionario el valor y ocurrecias del idioma que digito el usuario
          idioma_search = idioma_search.capitalize()
          dic_ocurrencias_user[idioma_search.capitalize()] = ocurrencias_user
+         
 
          # esta función devuelve cuantas veces aparece el idioma solicitado
-         return dic_ocurrencias_user
-
+         return  sorted(dic_ocurrencias_user.items())
+                  
 def idiomas(ruta_archivo):
     
     #estos son los idiomas que aparecen en nuestro archivo PEQUEÑO
@@ -279,7 +280,7 @@ def idiomas(ruta_archivo):
                 
             else:
                 idiomas_org[lectura_idioma.capitalize()] += 1 
-        return sorted(idiomas_org.items())
+        return sorted(idiomas_org.items(), key= lambda items: items[1], reverse= True)
 
 def ejecutar_menu():
     ruta = "youtube_pequeño.csv"
@@ -321,7 +322,11 @@ def ejecutar_menu():
         elif opcion == '4':
             target = input("¿Qué idioma desea contabilizar? ")
             resultado = idioma(ruta, target)
-            print(f"Resultado del análisis: {resultado}")
+            for idioma_nom, cantidad in resultado:
+                if cantidad != 1:
+                    print(f"- Existen {cantidad} videos en {idioma_nom}")
+                else:
+                    print(f"- Existe {cantidad} video en {idioma_nom}")
 
         elif opcion == '5':
             resumen = idiomas(ruta)
