@@ -2,16 +2,20 @@ def cargar_datos(ruta):
     #Se crea una lista para guardar las filas
     datos = []
     #Abrimos el archivo
-    with open(ruta, encoding="utf-8") as archivo:
-        encabezado = archivo.readline() 
+    try:
+        with open(ruta, encoding="utf-8") as archivo:
+            encabezado = archivo.readline() 
         # Recorremos el archivo linea por linea, maximo 50 filas
-        for i, linea in enumerate(archivo):
-            if i >= 50:
-                break
-        linea = linea.strip()# eliminamos espacios
-        columnas = linea.split(",")# Dividimos la linea en columnas
-        datos.append(columnas)# Guardamos las filas en la lista
-    return datos
+            for i, linea in enumerate(archivo):
+                if i >= 50:
+                    break
+            linea = linea.strip()# eliminamos espacios
+            columnas = linea.split(",")# Dividimos la linea en columnas
+            if len(columnas) >=9:
+                datos.append(columnas)# Guardamos las filas en la lista
+        return datos
+    except FileNotFoundError:
+        print(f"El archivo {ruta} no existe en este directorio")
 def buscar(datos, termino):
 
     contador = 0
@@ -34,47 +38,6 @@ def buscar(datos, termino):
     print(f"Se encontraron {contador} registros.")
     # Mostramos el total de coincidencias encontradas
 
-# Esta función controla el menu del programa
-def menu():
-
-    datos = cargar_datos("youtube_pequeño.csv")
-    # Cargamos los datos del archivo una sola vez
-    # "datos" ahora contiene una lista de filas
-
-    while True:
-        # Bucle infinito para que el menú se repita
-
-        print("\n--- MENÚ ---")
-        print("1. Buscar")
-        print("2. Salir")
-
-        opcion = input("Elige una opción: ")
-        # Pedimos al usuario que elija una opción
-
-        if opcion == "1":
-            # Si elige buscar.
-
-            termino = input("Ingresa término a buscar: ")
-            # Pedimos el texto que quiere buscar
-
-            buscar(datos, termino)
-            # Llamamos a la función buscar
-
-        elif opcion == "2":
-            # Si elige salir
-
-            print("Saliendo...")
-            break
-            # Rompe el bucle y termina el programa
-
-        else:
-            # Si escribe algo inválido
-
-            print("Opción inválida")
-
-
-menu()
-# Llamamos a la función menú para que todo empiece
 def convertir(valor_str):
     valor_str = valor_str.strip().upper() #quita los espacios en blanco y lo pone en mayusculas 
     
@@ -255,56 +218,6 @@ def procesar_estadisticas(datos):
         "contador": contador
     }
     #Ya esta el contador, el promedioo el return que envia los resultados finales.a
-    #Unicamente falta la parte de ellos y hacer la interfaz
-    #Bloque menu interactivo en consola inicio:
-def ejecutar_menu():
-    ruta = "youtube_pequeño.csv"
-    try:
-        res = procesar_estadisticas(ruta)
-    except FileNotFoundError:
-        print(f"Error crítico: No se encontró {ruta}")
-        return
-    while True:
-        print("\n" + "="*40)
-        print("DATA LAB - Analisis de videos mas vistos youtube")
-        print("="*40)
-        print("1. Video con mas vistas")
-        print("2. Video con menos vistas")
-        print("3. Video con mas likes")
-        print("4. Video con menos likes")
-        print("5. Promedios (Vistas y Likes)")
-        print("6. Filtrar por vistas")    
-        print("7. Salir")
-        print("="*40)
-
-        opcion = input("Selecciona una opción (1-7): ")
-        #Aquí se selecciona la opícón y da los resultados pedidos
-        if opcion == '1':
-            print(f"\n VIDEO: {res['nom_max_v']}")
-            print(f" Vistas: {res['max_v']:,.0f}")
-        elif opcion == '2':
-            print(f"\n VIDEO: {res['nom_min_v']}")
-            print(f" Vistas: {res['min_v']:,.0f}")
-        elif opcion == '3':
-            print(f"\n VIDEO: {res['nom_max_l']}")
-            print(f" Likes: {res['max_l']:,.0f}")
-        elif opcion == '4':
-            print(f"\n VIDEO: {res['nom_min_l']}")
-            print(f" Likes: {res['min_l']:,.0f}")
-        elif opcion == '5':
-            print(f"\n Promedio de Vistas: {res['prom_v']:,.2f}")
-            print(f"Promedio de Likes: {res['prom_l']:,.2f}")
-            print(f"Total de videos analizados: {res['contador']}")
-        elif opcion == '6':
-            filtrar_por_vistas(ruta)
-        elif opcion == '7':
-            print("\n Cerrando sistema...")
-            break
-        else:
-            print("\n Opción inválida.")
-
-#función para contar el numero de ocurrencias del idioma que indico el usuario
-
 def idioma(ruta_archivo,idioma_user):
      
     
@@ -362,6 +275,67 @@ def idiomas(ruta_archivo):
             else:
                 idiomas_org[lectura_idioma.capitalize()] += 1 
         return sorted(idiomas_org.items())
+
+def ejecutar_menu():
+    ruta = "youtube_pequeño.csv"
+    
+    # 1. Carga inicial: El disco se lee UNA SOLA VEZ
+    datos_sistema = cargar_datos(ruta)
+    
+    if not datos_sistema:
+        return
+
+    while True:
+        print("\n" + "="*45)
+        print("         DATA LAB - GESTIÓN DE VIDEOS")
+        print("="*45)
+        print("1. Buscar registros por término")
+        print("2. Ver estadísticas generales (Vistas/Likes)")
+        print("3. Filtrar por umbral de vistas")
+        print("4. Analizar frecuencia de un idioma")
+        print("5. Ver resumen de todos los idiomas")
+        print("6. Salir")
+        print("="*45)
+
+        opcion = input("Selecciona una opción (1-6): ")
+
+        if opcion == '1':
+            termino = input("Ingresa el término a buscar: ")
+            buscar(datos_sistema, termino)
+
+        elif opcion == '2':
+            # Llamamos a la función de estadísticas usando la RAM
+            res = procesar_estadisticas(datos_sistema)
+            if res:
+                print(f"\n--- RESUMEN ESTADÍSTICO (Top 50) ---")
+                print(f"MÁS VISTO: {res['nom_max_v']} ({res['max_v']:,.0f})")
+                print(f"MENOS VISTO: {res['nom_min_v']} ({res['min_v']:,.0f})")
+                print(f"PROMEDIO VISTAS: {res['prom_v']:,.2f}")
+                print(f"TOTAL VIDEOS: {res['contador']}")
+
+        elif opcion == '3':
+            try:
+                umbral = float(input("Ingrese el mínimo de vistas: "))
+                filtrar_por_vistas(datos_sistema, umbral)
+            except ValueError:
+                print("Error: Ingrese un valor numérico válido.")
+
+        elif opcion == '4':
+            target = input("¿Qué idioma desea contabilizar? ")
+            resultado = analizar_un_idioma(datos_sistema, target)
+            print(f"Resultado del análisis: {resultado}")
+
+        elif opcion == '5':
+            resumen = agrupar_todos_los_idiomas(datos_sistema)
+            print("\nDISTRIBUCIÓN POR IDIOMA:")
+            for idioma_nom, cantidad in resumen:
+                print(f"- {idioma_nom}: {cantidad} videos")
+
+        elif opcion == '6':
+            print("\nSaliendo del sistema. ¡Éxito en la entrega!")
+            break
+        else:
+            print("\nOpción no válida. Intente de nuevo.")
 
 if __name__ == "__main__":
     ejecutar_menu()
