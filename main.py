@@ -158,7 +158,8 @@ def filtrar_por_vistas(ruta_archivo):
         print("\nERROR: Debe ingresar un valor numérico válido.")
         
 #Función principal para calcular
-def procesar_estadisticas(ruta_archivo):
+def procesar_estadisticas(datos):
+    # CAMBIO: La función ahora recibe la matriz 'datos' en memoria, no la ruta del disco.
     
     contador = 0 
     # Cree las variables acumuladoras para guardar el número más alto, el más bajo y la suma de todos y el contador para saber cuántas filas proceso.
@@ -174,69 +175,66 @@ def procesar_estadisticas(ruta_archivo):
     nombre_min_vistas = ""
     nombre_max_likes = ""
     nombre_min_likes = ""
+    
     # Identifique el encabezado(primer fila) que son los titulos y estos no se procesan como números
-    es_encabezado = True
+    
     # Hice esto para que el primer número procesado se convierta en el primer mínimo y el primer máximo
     es_primer_dato = True
     
     # Abri el archivo de forma normal
-    with open(ruta_archivo, 'r', encoding='utf-8') as archivo:
+    # CAMBIO:Ya no abrimps el archivo físico. Iteramos directamente sobre la memoria RAM.
+    for columnas in datos:
         
-        # Procesa el archivo línea por línea
-        for linea in archivo:
+        # Valido que la fila no este rota o vacia para que no de error
+        if len(columnas) < 9:
+            continue
             
-            # Si es la primera línea se cambia a false y el continue funciona para saltasr el resto del codigo y pasar a la siguiente línea que son los datos reales
-            if es_encabezado == True:
-                es_encabezado = False
-                continue
-            linea = linea.strip() #aqui se limpia la línea de saltos invisibles (\n) antes de cortarla
-            # Corta la línea de texto cada vez que encuentra una coma y lo convierte a una lista de palabras
-            columnas = linea.split(',')
-            # Valido que la fila no este rota o vacia para que no de error
-            if len(columnas) < 9:
-                continue
-            nombre_video = columnas[1]#extrae el nombre del video que está en la segunda posición
-            vistas_str = columnas[-2]# accede a la penultima columna
-            likes_str = columnas[-1]#accede a la última columna para los likes
+        nombre_video = columnas[1]#extrae el nombre del video que está en la segunda posición
+        vistas_str = columnas[-2]# accede a la penultima columna
+        likes_str = columnas[-1]#accede a la última columna para los likes
+        
+        #Llama a la función de transformar el texto a un número de vistas y likes
+        valor_numerico_vistas = convertir(vistas_str)
+        valor_numerico_likes = convertir(likes_str)
+        
+        ##Condicion que faltaba para que el primer numero sea el mas grande y el mas pequeño de los numeros
+        if es_primer_dato == True:
+            # Si es el primer dato que se lee, es el mayor y el menor a la vez.
+            max_val_vistas = valor_numerico_vistas
+            min_val_vistas = valor_numerico_vistas
             
-            #Llama a la función de transformar el texto a un número de vistas y likes
-            valor_numerico_vistas = convertir(vistas_str)
-            valor_numerico_likes = convertir(likes_str)
-            ##Condicion que faltaba para que el primer numero sea el mas grande y el mas pequeño de los numeros
-            if es_primer_dato == True:
-                # Si es el primer dato que se lee, es el mayor y el menor a la vez.
+            #Inicia en la primera pasada las variables de likes y de los nombres
+            max_val_likes = valor_numerico_likes
+            min_val_likes = valor_numerico_likes
+            nombre_max_vistas = nombre_video
+            nombre_min_vistas = nombre_video
+            nombre_max_likes = nombre_video
+            nombre_min_likes = nombre_video
+            
+            #Esto es porque como la fila tiene los titulos de las columnas pues no se pueden procesar ni nos interesa que se procese
+            es_primer_dato = False 
+        else:
+            # y sii no es el primero, se compara con los que ya se tienen guardados
+            if valor_numerico_vistas > max_val_vistas:
                 max_val_vistas = valor_numerico_vistas
-                min_val_vistas = valor_numerico_vistas
-                #Inicia en la primera pasada las variables de likes y de los nombres
-                max_val_likes = valor_numerico_likes
-                min_val_likes = valor_numerico_likes
                 nombre_max_vistas = nombre_video
+
+            if valor_numerico_vistas < min_val_vistas:
+                min_val_vistas = valor_numerico_vistas
                 nombre_min_vistas = nombre_video
+
+            if valor_numerico_likes > max_val_likes:
+                max_val_likes = valor_numerico_likes
                 nombre_max_likes = nombre_video
+            
+            if valor_numerico_likes < min_val_likes:
+                min_val_likes = valor_numerico_likes
                 nombre_min_likes = nombre_video
                 
-                es_primer_dato = False #Esto es porque como la fila tiene los titulos de las columnas pues no se pueden procesar ni nos interesa que se procese
-            else:
-                # y sii no es el primero, se compara con los que ya se tienen guardados
-                if valor_numerico_vistas > max_val_vistas:
-                    max_val_vistas = valor_numerico_vistas
-                    nombre_max_vistas = nombre_video
-
-                if valor_numerico_vistas < min_val_vistas:
-                    min_val_vistas = valor_numerico_vistas
-                    nombre_min_vistas = nombre_video
-
-                if valor_numerico_likes > max_val_likes:
-                    max_val_likes = valor_numerico_likes
-                    nombre_max_likes = nombre_video
-                
-                if valor_numerico_likes < min_val_likes:
-                    min_val_likes = valor_numerico_likes
-                    nombre_min_likes = nombre_video
-            #Suma el valor actual al total que ya esta acomulado y se suma 1 al contador de registros.
-            sumatoria_vistas = sumatoria_vistas + valor_numerico_vistas
-            sumatoria_likes = sumatoria_likes + valor_numerico_likes
-            contador = contador + 1
+        #Suma el valor actual al total que ya esta acomulado y se suma 1 al contador de registros.
+        sumatoria_vistas = sumatoria_vistas + valor_numerico_vistas
+        sumatoria_likes = sumatoria_likes + valor_numerico_likes
+        contador = contador + 1
             
     # Se divide la suma total entre el número de filas procesadas
     promedio_vistas = 0.0
@@ -258,7 +256,6 @@ def procesar_estadisticas(ruta_archivo):
     }
     #Ya esta el contador, el promedioo el return que envia los resultados finales.a
     #Unicamente falta la parte de ellos y hacer la interfaz
-     
     #Bloque menu interactivo en consola inicio:
 def ejecutar_menu():
     ruta = "youtube_pequeño.csv"
