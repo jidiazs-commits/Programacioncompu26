@@ -4,18 +4,19 @@ def cargar_datos(ruta):
     #Abrimos el archivo
     try:
         with open(ruta, encoding="utf-8") as archivo:
-            encabezado = archivo.readline() 
+            archivo.readline() 
         # Recorremos el archivo linea por linea, maximo 50 filas
             for i, linea in enumerate(archivo):
                 if i >= 50:
                     break
                 linea = linea.strip()# eliminamos espacios
                 columnas = linea.split(",")# Dividimos la linea en columnas
-                if len(columnas) >=9:
+                if len(columnas) >= 9:
                     datos.append(columnas)# Guardamos las filas en la lista
         return datos
     except FileNotFoundError:
         print(f"El archivo {ruta} no existe en este directorio")
+        return []
 def buscar(datos, termino):
 
     contador = 0
@@ -299,13 +300,7 @@ def ejecutar_menu():
 
         if opcion == '1':
             termino = input("Ingresa el término a buscar: ")
-            encontrados = buscar(datos_sistema, termino)
-            if encontrados:
-                for fila in encontrados:
-                    print(fila)
-                print(f"\nSe encontraron {len(encontrados)} registros.")
-            else:
-                print("No se encontraron coincidencias.")
+            buscar(datos_sistema, termino)
 
         elif opcion == '2':
             res = procesar_estadisticas(datos_sistema)
@@ -317,25 +312,15 @@ def ejecutar_menu():
                 print(f"TOTAL VIDEOS: {res['contador']}")
 
         elif opcion == '3':
-            try:
-                umbral = float(input("Ingrese el mínimo de vistas: "))
-                resultados = filtrar_por_vistas(datos_sistema, umbral)
-                if resultados:
-                    for item in resultados:
-                        print(f" * ENCONTRADO: {item['titulo']} ({item['vistas']:,.0f} vistas)")
-                    print(f"\nSe encontraron {len(resultados)} resultados.")
-                else:
-                    print("\nNo hay videos que superen ese número de vistas.")
-            except ValueError:
-                print("Error: Ingrese un valor numérico válido.")
+            filtrar_por_vistas(ruta)
 
         elif opcion == '4':
             target = input("¿Qué idioma desea contabilizar? ")
-            resultado = idioma(datos_sistema, target)
+            resultado = idioma(ruta, target)
             print(f"Resultado del análisis: {resultado}")
 
         elif opcion == '5':
-            resumen = idiomas(datos_sistema)
+            resumen = idiomas(ruta)
             print("\nDISTRIBUCIÓN POR IDIOMA:")
             for idioma_nom, cantidad in resumen:
                 print(f"- {idioma_nom}: {cantidad} videos")
