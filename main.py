@@ -9,10 +9,10 @@ def cargar_datos(ruta):
             for i, linea in enumerate(archivo):
                 if i >= 50:
                     break
-            linea = linea.strip()# eliminamos espacios
-            columnas = linea.split(",")# Dividimos la linea en columnas
-            if len(columnas) >=9:
-                datos.append(columnas)# Guardamos las filas en la lista
+                linea = linea.strip()# eliminamos espacios
+                columnas = linea.split(",")# Dividimos la linea en columnas
+                if len(columnas) >=9:
+                    datos.append(columnas)# Guardamos las filas en la lista
         return datos
     except FileNotFoundError:
         print(f"El archivo {ruta} no existe en este directorio")
