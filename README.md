@@ -1,2 +1,2 @@
-
-Ya terminamos nuestra funcionalidad e hicimos el menu interactivo en consola de nuestra funcionalidad, faltaria que ustedes implementen sus funcionalidades y lo unan a la interfaz
+Este proyecto consiste en un programa de Python que permite analizar información de videos almacenados en un archivo CVS. Esta diseñado para facilitar la exploracion de estos datos mediante un menu interactivo que ofrece diferentes funciones de consulta y filtrado. Despues de cargar el archivo, se leen asta 50 resgistros, de los cuales se pueden realizar busquedas especificas (sin importar mayusculas o minusculas ) y conocer el numero de concidencias. Ademas, el programa puede calcular estadisticas como el video con mayor número de vistas, el de menor número de vistas, el promedio de visualizaciones, la cantidad de registros procesados o filtrar los videos segun un minimo de vistas definido por el usuario 
+Para su ejeución,
