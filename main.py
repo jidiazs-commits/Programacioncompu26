@@ -18,21 +18,16 @@ def cargar_datos(ruta):
         print(f"El archivo {ruta} no existe en este directorio")
         return []
 def buscar(datos, termino):
-
     contador = 0
     # Variable que guarda la cantidad de concidencias
-    
     for fila in datos:    
         # Convertimos la fila en un solo string
         # Ejemplo: ["Juan", "20", "Bogota"] → "Juan,20,Bogota"
         fila_completa = ",".join(fila)
-
         # Ignoramos mayusculas y minusculas
         if termino.lower() in fila_completa.lower():
             # Imprimimos la fila encontrada
-
             print(fila)
-
             contador += 1
             # Sumamos 1 al contador
 
